@@ -1,0 +1,20 @@
+﻿@model Expenses_App.Models.ExpenseCategory
+
+@{
+    ViewData["Title"] = "Редактировать категорию";
+}
+
+<h2>Редактировать категорию</h2>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="CategoryId" />
+    <div class="form-group">
+        <label asp-for="Name">
+            Наименование
+        </label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Сохранить</button>
+    <a asp-action="Index" class="btn btn-secondary">Отмена</a>
+</form>

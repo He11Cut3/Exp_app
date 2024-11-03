@@ -1,0 +1,50 @@
+﻿@model IEnumerable<dynamic>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+@{
+    ViewData["Title"] = "Расходы за месяц";
+}
+
+<h2>Расходы за месяц</h2>
+
+<form asp-action="DownloadReport" method="get">
+    <button type="submit" class="btn btn-primary">Скачать отчет в Excel</button>
+</form>
+
+<canvas id="monthlyExpensesChart"></canvas>
+
+<script>
+    var ctx = document.getElementById('monthlyExpensesChart').getContext('2d');
+    var monthlyExpensesData = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model));
+
+    monthlyExpensesData.sort((a, b) => {
+        if (a.Year === b.Year) {
+            return a.Month - b.Month;
+        }
+        return a.Year - b.Year;
+    });
+
+    var labels = monthlyExpensesData.map(x => `${x.Year}-${x.Month < 10 ? '0' + x.Month : x.Month}`);
+    var data = monthlyExpensesData.map(x => x.TotalAmount);
+
+    var monthlyExpensesChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Общие расходы',
+                data: data,
+                borderColor: 'rgba(75, 192, 192, 1)',
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>

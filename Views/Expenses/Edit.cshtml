@@ -1,0 +1,34 @@
+﻿@model Expense
+
+@{
+    ViewData["Title"] = "Редактировать расход";
+}
+
+
+<h2>Редактировать расход</h2>
+
+<form asp-action="Edit" method="post">
+    <div class="form-group">
+        <label asp-for="Date">Дата</label>
+        <input asp-for="Date" class="form-control"  required />
+        <span asp-validation-for="Date" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="CategoryId">Категория</label>
+        <select asp-for="CategoryId" class="form-control" asp-items="@(new SelectList(ViewBag.Categories, "CategoryId", "Name"))" required></select>
+        <span asp-validation-for="CategoryId" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Amount">Сумма</label>
+        <input asp-for="Amount" class="form-control" type="number" required />
+        <span asp-validation-for="Amount" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Comment">Комментарий</label>
+        <textarea asp-for="Comment" class="form-control" ></textarea>
+        <span asp-validation-for="Comment" class="text-danger"></span>
+    </div>
+    <input type="hidden" asp-for="ExpenseId" />
+    <button type="submit" class="btn btn-primary">Сохранить</button>
+    <a asp-action="Index" class="btn btn-secondary">Отмена</a>
+</form>

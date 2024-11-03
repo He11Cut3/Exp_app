@@ -1,0 +1,19 @@
+﻿@model Expenses_App.Models.ExpenseCategory
+
+@{
+    ViewData["Title"] = "Добавить категорию";
+}
+
+<h2>Добавить категорию</h2>
+
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label asp-for="Name">
+            Наименование
+        </label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Добавить</button>
+    <a asp-action="Index" class="btn btn-secondary">Отмена</a>
+</form>
